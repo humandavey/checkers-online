@@ -1,12 +1,12 @@
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 .tile {
     width: 80px;
     height: 80px;
-    border-style: solid;
 }
 
 .row {
@@ -14,8 +14,8 @@
 }
 
 .board {
-    width: 688px;
-    height: 688px;
+    width: 646px;
+    height: 646px;
     border-style: solid;
     font-size: 0px;
 }
@@ -26,6 +26,10 @@
 
 .white {
     background-color: rgb(245, 228, 223);
+}
+
+.yellow {
+    background-color: rgb(255, 255, 149);
 }
 
 img {
