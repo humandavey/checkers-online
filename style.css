@@ -1,9 +1,25 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
 .tile {
-    border-style: solid;
     width: 80px;
     height: 80px;
+    border-style: solid;
 }
 
 .row {
     display: inline-grid;
+}
+
+.board {
+    width: 688px;
+    height: 688px;
+    border-style: solid;
+    font-size: 0px;
+}
+
+img {
+    display: block;
 }
