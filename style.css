@@ -20,6 +20,14 @@
     font-size: 0px;
 }
 
+.black {
+    background-color: rgb(71, 61, 61);
+}
+
+.white {
+    background-color: rgb(245, 228, 223);
+}
+
 img {
     display: block;
 }
