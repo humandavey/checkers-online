@@ -1,5 +1,15 @@
 const board = document.querySelector(".board");
 
+/*  TODO LIST
+
+    Moving Backwards
+    Queen Icon
+    Turns
+    Piece Count
+    Tie Checker
+
+*/
+
 let selectedPiece;
 let proposedMove;
 
