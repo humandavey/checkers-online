@@ -1,0 +1,9 @@
+.tile {
+    border-style: solid;
+    width: 80px;
+    height: 80px;
+}
+
+.row {
+    display: inline-grid;
+}
