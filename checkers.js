@@ -7,7 +7,6 @@ let proposedMove;
 
 /*  TODO LIST
 
-    Turns
     Piece Count
     Tie Checker
 
@@ -29,7 +28,7 @@ addEventListener("click", (event) => {
         proposedMove = event.target;
     }
 
-    if (selectedPiece != null && proposedMove != null && getTeamOfPiece(selectedPiece) == turn) {
+    if (selectedPiece != null && proposedMove != null && (getTeamOfPiece(selectedPiece) == turn || turn.includes("+"))) {
 
         if (isValidMove(selectedPiece, proposedMove)) {
             selectedPiece.parentNode.classList.remove("yellow");
@@ -44,7 +43,9 @@ addEventListener("click", (event) => {
             selectedPiece = null;
             proposedMove = null;
 
-            switchTurn();
+            if (!turn.includes("+")) {
+                switchTurn();
+            }
         }
     }
 });
@@ -86,29 +87,52 @@ function isValidMove(piece, move) {
             }
         }
     }
-
-    if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
+    if (turn.includes("+")) {
+        if (getTeamOfPiece(piece) == turn.substring(0, turn.length-1)) {
+            if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
+                turn = turn.substring(0, turn.length-1);
+                return true;
+            }
+        }
+    } else if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
         return true;
     }
+
 
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column + 1)) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column + 1);
         hopped.parentNode.removeChild(hopped);
+        if (!turn.includes("+")) {
+            switchTurn();
+            turn += "+";
+        }
         return true;
     }
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column - 1)) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column - 1);
         hopped.parentNode.removeChild(hopped);
+        if (!turn.includes("+")) {
+            switchTurn();
+            turn += "+";
+        }
         return true;
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column - 1)) {
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column - 1);
         hopped.parentNode.removeChild(hopped);
+        if (!turn.includes("+")) {
+            switchTurn();
+            turn += "+";
+        }
         return true;
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column + 1)) {
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column + 1);
         hopped.parentNode.removeChild(hopped);
+        if (!turn.includes("+")) {
+            switchTurn();
+            turn += "+";
+        }
         return true;
     }
     
