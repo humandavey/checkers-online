@@ -1,17 +1,17 @@
 const board = document.querySelector(".board");
+const header = document.querySelector("#header");
+let turn = "black";
+
+let selectedPiece;
+let proposedMove;
 
 /*  TODO LIST
 
-    Moving Backwards
-    Queen Icon
     Turns
     Piece Count
     Tie Checker
 
 */
-
-let selectedPiece;
-let proposedMove;
 
 addEventListener("click", (event) => {
     if (event.target.classList.contains("piece")) {
@@ -29,7 +29,7 @@ addEventListener("click", (event) => {
         proposedMove = event.target;
     }
 
-    if (selectedPiece != null && proposedMove != null) {
+    if (selectedPiece != null && proposedMove != null && getTeamOfPiece(selectedPiece) == turn) {
 
         if (isValidMove(selectedPiece, proposedMove)) {
             selectedPiece.parentNode.classList.remove("yellow");
@@ -43,6 +43,8 @@ addEventListener("click", (event) => {
 
             selectedPiece = null;
             proposedMove = null;
+
+            switchTurn();
         }
     }
 });
@@ -146,4 +148,13 @@ function shouldBeCrown(piece) {
 
 function isCrown(piece) {
     return piece.src.includes("crown");
+}
+
+function switchTurn() {
+    if (turn == "black") {
+        turn = "red";
+    } else {
+        turn = "black";
+    }
+    header.innerHTML = "Checkers - " + turn.charAt(0).toUpperCase() + turn.substring(1) + "'s Move";
 }
