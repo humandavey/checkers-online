@@ -17,6 +17,7 @@ let hasStarted = false;
 let startTimestamp = -1;
 
 let pastStates = [saveState()];
+let timer = -1;
 
 addEventListener("click", (event) => {
 
@@ -44,7 +45,7 @@ addEventListener("click", (event) => {
         if (isValidMove(selectedPiece, proposedMove)) {
             if (!hasStarted) {
                 startTimestamp = Math.floor(Date.now() / 1000);
-                setInterval(() => {
+                timer = setInterval(() => {
                     updateTime();
                 }, 1000);
                 hasStarted = true;
@@ -69,9 +70,11 @@ addEventListener("click", (event) => {
             if (redLosses == 12) {
                 header.innerHTML = "Checkers - BLACK WON!";
                 gameOver = true;
+                clearInterval(timer);
             } else if (blackLosses == 12) {
                 header.innerHTML = "Checkers - RED WON!";
                 gameOver = true;
+                clearInterval(timer);
             }
             updateScore();
 
@@ -318,8 +321,10 @@ function loadState(matrixWithTurn) {
 
 function undo() {
     if (pastStates.length > 0) {
-        selectedPiece.parentNode.classList.remove("yellow");
-        selectedPiece.parentNode.classList.add("black");
+        if (selectedPiece != null) {
+            selectedPiece.parentNode.classList.remove("yellow");
+            selectedPiece.parentNode.classList.add("black");
+        }
         loadState(pastStates[pastStates.length - 2]);
         pastStates.pop();
     }
