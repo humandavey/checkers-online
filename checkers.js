@@ -1,5 +1,7 @@
 const board = document.querySelector(".board");
 const header = document.querySelector("#header");
+const blackLost = document.querySelector("#black-lost");
+const redLost = document.querySelector("#red-lost");
 
 let turn = "black";
 let gameOver = false;
@@ -67,6 +69,7 @@ addEventListener("click", (event) => {
                 header.innerHTML = "Checkers - RED WON!";
                 gameOver = true;
             }
+            updateScore();
         }
     }
 });
@@ -255,4 +258,9 @@ function switchTurn() {
         turn = "black";
     }
     header.innerHTML = "Checkers - " + turn.charAt(0).toUpperCase() + turn.substring(1) + "'s Move";
+}
+
+function updateScore() {
+    blackLost.innerHTML = "Pieces Lost: " + blackLosses;
+    redLost.innerHTML = "Pieces Lost: " + redLosses;
 }
