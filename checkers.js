@@ -11,12 +11,6 @@ let redLosses = 0;
 
 let selectedPiece;
 let proposedMove;
-/*  TODO LIST
-
-    Piece Count - needs displaying
-    Tie Checker
-
-*/
 
 function resetGame() {
     location.reload();
