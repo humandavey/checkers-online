@@ -37,6 +37,10 @@ addEventListener("click", (event) => {
 
             proposedMove.appendChild(selectedPiece);
 
+            if (shouldBeCrown(selectedPiece)) {
+                turnCrown(selectedPiece);
+            }
+
             selectedPiece = null;
             proposedMove = null;
         }
@@ -69,6 +73,18 @@ function isValidMove(piece, move) {
     const pieceLocation = getLocationOfPiece(piece);
     const moveLocation = getLocationOfTile(move);
 
+    if (!isCrown(piece)) {
+        if (getTeamOfPiece(piece) == "black") {
+            if (getLocationOfPiece(piece).column > getLocationOfTile(move).column) {
+                return false;
+            }
+        } else {
+            if (getLocationOfPiece(piece).column < getLocationOfTile(move).column) {
+                return false;
+            }
+        }
+    }
+
     if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
         return true;
     }
@@ -77,7 +93,6 @@ function isValidMove(piece, move) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column + 1);
         hopped.parentNode.removeChild(hopped);
         return true;
-        
     }
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column - 1)) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column - 1);
@@ -115,4 +130,20 @@ function getLocationOfTile(tile) {
 
 function getLocationOfPiece(piece) {
     return getLocationOfTile(piece.parentNode);
+}
+
+function turnCrown(piece) {
+    const team = getTeamOfPiece(piece);
+    piece.src = "/assets/" + team + "_crown.png";
+}
+
+function shouldBeCrown(piece) {
+    if (getTeamOfPiece(piece) == "black") {
+        return getLocationOfPiece(piece).column == 7;
+    }
+    return getLocationOfPiece(piece).column == 0;
+}
+
+function isCrown(piece) {
+    return piece.src.includes("crown");
 }
