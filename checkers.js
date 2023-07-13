@@ -16,6 +16,10 @@ let proposedMove;
 
 */
 
+function resetGame() {
+    location.reload();
+}
+
 addEventListener("click", (event) => {
 
     if (event.target.classList.contains("piece")) {

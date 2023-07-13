@@ -18,9 +18,15 @@
     display: inline-grid;
 }
 
+.reset {
+    height: 50px;
+    width: 150px;
+    font-size: 25px;
+}
+
 .board {
-    width: 646px;
-    height: 646px;
+    width: 640px;
+    height: 640px;
     border-style: solid;
     font-size: 0px;
 }
