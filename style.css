@@ -1,12 +1,17 @@
 * {
     margin: 0px;
     padding: 0px;
-    box-sizing: border-box;
+    text-align: center;
 }
 
 .tile {
     width: 80px;
     height: 80px;
+}
+
+.boardContainer{
+    display: flex;
+    justify-content: center;
 }
 
 .row {
