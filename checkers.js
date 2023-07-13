@@ -1,19 +1,28 @@
 const board = document.querySelector(".board");
 const header = document.querySelector("#header");
+
 let turn = "black";
+let gameOver = false;
+
+let blackLosses = 0;
+let redLosses = 0;
 
 let selectedPiece;
 let proposedMove;
-
 /*  TODO LIST
 
-    Piece Count
+    Piece Count - needs displaying
     Tie Checker
 
 */
 
 addEventListener("click", (event) => {
+
     if (event.target.classList.contains("piece")) {
+        if (gameOver) {
+            return;
+        }
+
         if (selectedPiece != null) {
             selectedPiece.parentNode.classList.remove("yellow");
             selectedPiece.parentNode.classList.add("black");
@@ -45,6 +54,14 @@ addEventListener("click", (event) => {
 
             if (!turn.includes("+")) {
                 switchTurn();
+            }
+
+            if (redLosses == 12) {
+                header.innerHTML = "Checkers - BLACK WON!";
+                gameOver = true;
+            } else if (blackLosses == 12) {
+                header.innerHTML = "Checkers - RED WON!";
+                gameOver = true;
             }
         }
     }
@@ -101,16 +118,43 @@ function isValidMove(piece, move) {
 
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column + 1)) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column + 1);
+        if (getTeamOfPiece(hopped) == "red") {
+            redLosses++;
+        } else {
+            blackLosses++;
+        }
         hopped.parentNode.removeChild(hopped);
+
+        if (getTeamOfPiece(piece) == "black" && turn == "black+") {
+            turn = "red+";
+        } else if (getTeamOfPiece(piece) == "red" && turn == "red+") {
+            turn = "black+";
+        }
+        header.innerHTML = "Checkers - " + (turn.charAt(0).toUpperCase() + turn.substring(1)).replaceAll("+", "") + "'s Move";
+
         if (!turn.includes("+")) {
             switchTurn();
             turn += "+";
         }
+        
         return true;
     }
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column - 1)) {
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column - 1);
+        if (getTeamOfPiece(hopped) == "red") {
+            redLosses++;
+        } else {
+            blackLosses++;
+        }
         hopped.parentNode.removeChild(hopped);
+
+        if (getTeamOfPiece(piece) == "black" && turn == "black+") {
+            turn = "red+";
+        } else if (getTeamOfPiece(piece) == "red" && turn == "red+") {
+            turn = "black+";
+        }
+        header.innerHTML = "Checkers - " + (turn.charAt(0).toUpperCase() + turn.substring(1)).replaceAll("+", "") + "'s Move";
+
         if (!turn.includes("+")) {
             switchTurn();
             turn += "+";
@@ -119,7 +163,20 @@ function isValidMove(piece, move) {
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column - 1)) {
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column - 1);
+        if (getTeamOfPiece(hopped) == "red") {
+            redLosses++;
+        } else {
+            blackLosses++;
+        }
         hopped.parentNode.removeChild(hopped);
+
+        if (getTeamOfPiece(piece) == "black" && turn == "black+") {
+            turn = "red+";
+        } else if (getTeamOfPiece(piece) == "red" && turn == "red+") {
+            turn = "black+";
+        }
+        header.innerHTML = "Checkers - " + (turn.charAt(0).toUpperCase() + turn.substring(1)).replaceAll("+", "") + "'s Move";
+
         if (!turn.includes("+")) {
             switchTurn();
             turn += "+";
@@ -128,7 +185,20 @@ function isValidMove(piece, move) {
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column + 1)) {
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column + 1);
+        if (getTeamOfPiece(hopped) == "red") {
+            redLosses++;
+        } else {
+            blackLosses++;
+        }
         hopped.parentNode.removeChild(hopped);
+
+        if (getTeamOfPiece(piece) == "black" && turn == "black+") {
+            turn = "red+";
+        } else if (getTeamOfPiece(piece) == "red" && turn == "red+") {
+            turn = "black+";
+        }
+        header.innerHTML = "Checkers - " + (turn.charAt(0).toUpperCase() + turn.substring(1)).replaceAll("+", "") + "'s Move";
+
         if (!turn.includes("+")) {
             switchTurn();
             turn += "+";
