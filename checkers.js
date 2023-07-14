@@ -3,6 +3,8 @@ const header = document.querySelector("#header");
 const blackLost = document.querySelector("#black-lost");
 const redLost = document.querySelector("#red-lost");
 const time = document.querySelector("#time");
+const blackTime = document.querySelector("#black-timer");
+const redTime = document.querySelector("#red-timer");
 
 let turn = "black";
 let gameOver = false;
@@ -18,6 +20,9 @@ let startTimestamp = -1;
 
 let pastStates = [saveState()];
 let timer = -1;
+
+let redTimerd = 600;
+let blackTimer = 600;
 
 addEventListener("click", (event) => {
 
@@ -320,6 +325,7 @@ function loadState(matrixWithTurn) {
 }
 
 function undo() {
+    if (gameOver) return;
     if (pastStates.length > 0) {
         if (selectedPiece != null) {
             selectedPiece.parentNode.classList.remove("yellow");
