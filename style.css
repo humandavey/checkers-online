@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+img {
+    display: block;
+}
+
 .tile {
     width: 80px;
     height: 80px;
@@ -43,6 +47,18 @@
     background-color: rgb(255, 255, 149);
 }
 
-img {
-    display: block;
+#black-lost {
+    margin-right: 30px;
+}
+
+#red-lost {
+    margin-left: 30px;
+}
+
+#time {
+    margin-top: 15px;
+}
+
+#header {
+    margin-top: 15px;
 }
