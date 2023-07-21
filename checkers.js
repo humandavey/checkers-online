@@ -39,9 +39,16 @@ addEventListener("click", (event) => {
         selectedPiece = event.target;
         proposedMove = null;
 
-        if (getTeamOfPiece(selectedPiece) != turn) return;
+
         selectedPiece.parentNode.classList.remove("black");
         selectedPiece.parentNode.classList.add("yellow");
+        if (getTeamOfPiece(selectedPiece) != turn) {
+            setTimeout(() => {
+                selectedPiece.parentNode.classList.remove("yellow");
+                selectedPiece.parentNode.classList.add("black");
+            }, 125);
+            return;
+        }
     } else if (event.target.classList.contains("tile") && event.target.classList.contains("black") && selectedPiece != null) {
         proposedMove = event.target;
     }
