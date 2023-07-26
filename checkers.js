@@ -8,6 +8,7 @@ const redTime = document.querySelector("#red-timer");
 
 let turn = "black";
 let gameOver = false;
+let eligiblePiece;
 
 let blackLosses = 0;
 let redLosses = 0;
@@ -42,7 +43,7 @@ addEventListener("click", (event) => {
 
         selectedPiece.parentNode.classList.remove("black");
         selectedPiece.parentNode.classList.add("yellow");
-        if (getTeamOfPiece(selectedPiece) != turn) {
+        if (getTeamOfPiece(selectedPiece) != turn && !turn.includes("+")) {
             setTimeout(() => {
                 selectedPiece.parentNode.classList.remove("yellow");
                 selectedPiece.parentNode.classList.add("black");
@@ -144,15 +145,23 @@ function isValidMove(piece, move) {
         if (getTeamOfPiece(piece) == turn.substring(0, turn.length-1)) {
             if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
                 turn = turn.substring(0, turn.length-1);
+                eligiblePiece = null;
                 return true;
             }
         }
     } else if ((pieceLocation.row + 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column) || (pieceLocation.row + 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column - 1 == moveLocation.column) || (pieceLocation.row - 1 == moveLocation.row && pieceLocation.column + 1 == moveLocation.column)) {
+        eligiblePiece = null;
         return true;
     }
 
 
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column + 1)) {
+        if (eligiblePiece != null) {
+            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                return false;
+            }
+        }
+        
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column + 1);
         if (getTeamOfPiece(hopped) == "red") {
             redLosses++;
@@ -172,10 +181,16 @@ function isValidMove(piece, move) {
             switchTurn();
             turn += "+";
         }
-        
+        eligiblePiece = { x: moveLocation.row, y: moveLocation.column};
         return true;
     }
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column - 1)) {
+        if (eligiblePiece != null) {
+            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                return false;
+            }
+        }
+        
         let hopped = getPieceAt(pieceLocation.row + 1, pieceLocation.column - 1);
         if (getTeamOfPiece(hopped) == "red") {
             redLosses++;
@@ -195,9 +210,16 @@ function isValidMove(piece, move) {
             switchTurn();
             turn += "+";
         }
+        eligiblePiece = { x: moveLocation.row, y: moveLocation.column};
         return true;
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column - 1)) {
+        if (eligiblePiece != null) {
+            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                return false;
+            }
+        }
+        
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column - 1);
         if (getTeamOfPiece(hopped) == "red") {
             redLosses++;
@@ -217,9 +239,16 @@ function isValidMove(piece, move) {
             switchTurn();
             turn += "+";
         }
+        eligiblePiece = { x: moveLocation.row, y: moveLocation.column};
         return true;
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column + 1)) {
+        if (eligiblePiece != null) {
+            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                return false;
+            }
+        }
+
         let hopped = getPieceAt(pieceLocation.row - 1, pieceLocation.column + 1);
         if (getTeamOfPiece(hopped) == "red") {
             redLosses++;
@@ -239,9 +268,10 @@ function isValidMove(piece, move) {
             switchTurn();
             turn += "+";
         }
+        eligiblePiece = { x: moveLocation.row, y: moveLocation.column};
         return true;
     }
-    
+    return false;
 }
 
 function getLocationOfTile(tile) {
