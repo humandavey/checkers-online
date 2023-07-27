@@ -157,8 +157,10 @@ function isValidMove(piece, move) {
 
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column + 1)) {
         if (eligiblePiece != null) {
-            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
-                return false;
+            if (getTeamOfPiece(getPieceAt(eligiblePiece.x, eligiblePiece.y)) == getTeamOfPiece(piece)) {
+                if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                    return false;
+                }
             }
         }
         
@@ -186,8 +188,10 @@ function isValidMove(piece, move) {
     }
     if (pieceLocation.row + 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row + 1, pieceLocation.column - 1)) {
         if (eligiblePiece != null) {
-            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
-                return false;
+            if (getTeamOfPiece(getPieceAt(eligiblePiece.x, eligiblePiece.y)) == getTeamOfPiece(piece)) {
+                if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                    return false;
+                }
             }
         }
         
@@ -215,8 +219,10 @@ function isValidMove(piece, move) {
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column - 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column - 1)) {
         if (eligiblePiece != null) {
-            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
-                return false;
+            if (getTeamOfPiece(getPieceAt(eligiblePiece.x, eligiblePiece.y)) == getTeamOfPiece(piece)) {
+                if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                    return false;
+                }
             }
         }
         
@@ -244,8 +250,10 @@ function isValidMove(piece, move) {
     }
     if (pieceLocation.row - 2 == moveLocation.row && pieceLocation.column + 2 == moveLocation.column && isSpaceTakenByOppositeTeam(getTeamOfPiece(piece), pieceLocation.row - 1, pieceLocation.column + 1)) {
         if (eligiblePiece != null) {
-            if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
-                return false;
+            if (getTeamOfPiece(getPieceAt(eligiblePiece.x, eligiblePiece.y)) == getTeamOfPiece(piece)) {
+                if (eligiblePiece.x != pieceLocation.row || eligiblePiece.y != pieceLocation.column) {
+                    return false;
+                }
             }
         }
 
