@@ -71,7 +71,7 @@ addEventListener("click", (event) => {
             proposedMove.appendChild(selectedPiece);
 
             if (shouldBeCrown(selectedPiece)) {
-                turnCrown(selectedPiece);
+                setCrown(selectedPiece);
             }
 
             selectedPiece = null;
@@ -302,9 +302,14 @@ function getLocationOfPiece(piece) {
     return getLocationOfTile(piece.parentNode);
 }
 
-function turnCrown(piece) {
+function setCrown(piece) {
     const team = getTeamOfPiece(piece);
     piece.src = "/assets/" + team + "_crown.png";
+}
+
+function removeCrown(piece) {
+    const team = getTeamOfPiece(piece);
+    piece.src = "/assets/" + team + "_piece.png";
 }
 
 function shouldBeCrown(piece) {
@@ -347,7 +352,9 @@ function saveState() {
     let board = [...Array(8)].map(() => Array(8));
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            board[j][i] = getPieceAt(i, j);
+            if (getPieceAt(i, j) != undefined) {
+                board[j][i] = { piece: getPieceAt(i, j), crowned: isCrown(getPieceAt(i, j)) };
+            }
         }
     }
     return [board, turn, blackLosses, redLosses];
@@ -358,7 +365,12 @@ function loadState(matrixWithTurn) {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (matrix[j][i] != undefined) {
-                setPieceAt(matrix[j][i], i, j);
+                setPieceAt(matrix[j][i].piece, i, j);
+                if (matrix[j][i].crowned) {
+                    setCrown(matrix[j][i].piece);
+                } else {
+                    removeCrown(matrix[j][i].piece)
+                }
             }
         }
     }
